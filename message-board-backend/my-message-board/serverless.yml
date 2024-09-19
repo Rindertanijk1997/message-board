@@ -1,0 +1,57 @@
+service: message-board
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  region: eu-central-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource: "arn:aws:dynamodb:eu-central-1:123456789012:table/MessagesTable"
+
+functions:
+  createMessage:
+    handler: handler.createMessage
+    events:
+      - http:
+          path: messages
+          method: post
+          cors: true
+  updateMessage:
+    handler: handler.updateMessage
+    events:
+      - http:
+          path: messages/{id}
+          method: put
+          cors: true
+  deleteMessage:
+    handler: handler.deleteMessage
+    events:
+      - http:
+          path: messages/{id}
+          method: delete
+          cors: true
+  getAllMessages:
+    handler: handler.getAllMessages
+    events:
+      - http:
+          path: messages
+          method: get
+          cors: true
+
+resources:
+  Resources:
+    MessagesTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        TableName: 'MessagesTable'
+        AttributeDefinitions:
+          - AttributeName: 'id'
+            AttributeType: 'S'
+        KeySchema:
+          - AttributeName: 'id'
+            KeyType: 'HASH'
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1

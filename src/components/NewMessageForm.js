@@ -1,31 +1,36 @@
 import React, { useState } from 'react';
 
 const NewMessageForm = ({ addMessage }) => {
-  const [username, setUsername] = useState('');
-  const [text, setText] = useState('');
+  const [formData, setFormData] = useState({ username: '', text: '' });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newMessage = { username, text, createdAt: new Date().toISOString() };
+    const newMessage = { ...formData, createdAt: new Date().toISOString() };
     addMessage(newMessage);
-    setUsername('');
-    setText('');
+    setFormData({ username: '', text: '' });
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <input
         type="text"
+        name="username"
         placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        value={formData.username}
+        onChange={handleChange}
         required
       />
       <input
         type="text"
+        name="text"
         placeholder="Message"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
+        value={formData.text}
+        onChange={handleChange}
         required
       />
       <button type="submit">Post Message</button>
