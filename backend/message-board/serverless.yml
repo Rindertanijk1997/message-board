@@ -1,10 +1,19 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: rindert
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: message-board-backend
+# "service" is the name of this project. This will also be added to your AWS resource names.
 service: message-board
 
 provider:
   name: aws
-  runtime: nodejs16.x
+  runtime: nodejs14.x
   region: eu-central-1
-  role: arn:aws:iam::050451366469:role/lambda-full-access-dynamodb 
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource: "*"
 
 functions:
   createMessage:
@@ -13,6 +22,13 @@ functions:
       - http:
           path: messages
           method: post
+          cors: true
+  getAllMessages:
+    handler: handler.getAllMessages
+    events:
+      - http:
+          path: messages
+          method: get
           cors: true
   updateMessage:
     handler: handler.updateMessage
@@ -27,13 +43,6 @@ functions:
       - http:
           path: messages/{id}
           method: delete
-          cors: true
-  getAllMessages:
-    handler: handler.getAllMessages
-    events:
-      - http:
-          path: messages
-          method: get
           cors: true
 
 resources:
@@ -51,4 +60,3 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-
