@@ -4,11 +4,7 @@ provider:
   name: aws
   runtime: nodejs16.x
   region: eu-central-1
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - dynamodb:*
-      Resource: "arn:aws:dynamodb:eu-central-1:123456789012:table/MessagesTable"
+  role: arn:aws:iam::050451366469:role/lambda-full-access-dynamodb 
 
 functions:
   createMessage:
@@ -55,3 +51,4 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+

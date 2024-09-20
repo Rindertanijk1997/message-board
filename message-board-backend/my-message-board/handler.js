@@ -1,73 +1,109 @@
 const AWS = require('aws-sdk');
 const dynamo = new AWS.DynamoDB.DocumentClient();
 
+// Skapa ett nytt meddelande
 module.exports.createMessage = async (event) => {
   try {
-    const { username, text } = JSON.parse(event.body);
-    const createdAt = new Date().toISOString();
-    const id = Math.random().toString(36).slice(2); // Enkel generering av unikt ID
+    const { username, text } = JSON.parse(event.body); // Parsar JSON från event.body
+    const createdAt = new Date().toISOString(); // Timestamp för meddelandet
+    const id = Math.random().toString(36).slice(2); // Genererar ett enkelt unikt ID
 
     const params = {
-        TableName: 'MessagesTable', // Se till att detta namn matchar det i din DynamoDB-tabell
-        Item: {
-            id,
-            username,
-            text,
-            createdAt
-        }
+      TableName: 'MessagesTable', // DynamoDB-tabellnamnet
+      Item: { id, username, text, createdAt }
     };
 
-    await dynamo.put(params).promise(); // Lägg till meddelandet i DynamoDB
+    // Lägg till meddelandet i DynamoDB
+    await dynamo.put(params).promise();
 
     return {
-        statusCode: 200,
-        body: JSON.stringify({ message: 'Message created successfully', id }),
-        headers: {
-            'Access-Control-Allow-Origin': '*', // Lägg till korrekt CORS-header om nödvändigt
-        }
+      statusCode: 200,
+      body: JSON.stringify({ message: 'Message created successfully', id }),
+      headers: {
+        'Access-Control-Allow-Origin': '*', // Tillåter alla domäner
+        'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE, OPTIONS', // Tillåtna HTTP-metoder
+      }
     };
   } catch (error) {
     console.error(error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Could not create message' })
+      body: JSON.stringify({ error: 'Could not create message' }),
+      headers: {
+        'Access-Control-Allow-Origin': '*', // CORS header
+        'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE, OPTIONS', // Tillåtna metoder
+      }
     };
   }
 };
 
+// Uppdatera ett meddelande
 exports.updateMessage = async (event) => {
-  const { id, text } = JSON.parse(event.body);
+  try {
+    const { id, text } = JSON.parse(event.body); // Extraherar ID och text från event.body
 
-  const params = {
+    const params = {
       TableName: 'MessagesTable',
       Key: { id },
-      UpdateExpression: 'set text = :text',
+      UpdateExpression: 'set text = :text', // Uppdaterar text-attributet
       ExpressionAttributeValues: {
-          ':text': text
+        ':text': text
       },
-      ReturnValues: 'UPDATED_NEW'
-  };
+      ReturnValues: 'UPDATED_NEW' // Returnerar de nya värdena efter uppdatering
+    };
 
-  try {
-      const result = await dynamo.update(params).promise();
-      return { statusCode: 200, body: JSON.stringify(result) };
+    const result = await dynamo.update(params).promise(); // Uppdaterar meddelandet i DynamoDB
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify(result),
+      headers: {
+        'Access-Control-Allow-Origin': '*', // CORS header
+        'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE, OPTIONS', // Tillåtna metoder
+      }
+    };
   } catch (error) {
-      return { statusCode: 500, body: JSON.stringify({ error: 'Could not update message' }) };
+    console.error(error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Could not update message' }),
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE, OPTIONS',
+      }
+    };
   }
 };
 
+// Ta bort ett meddelande
 exports.deleteMessage = async (event) => {
-  const { id } = JSON.parse(event.body);
+  try {
+    const { id } = JSON.parse(event.body); // Extraherar ID från event.body
 
-  const params = {
+    const params = {
       TableName: 'MessagesTable',
       Key: { id }
-  };
+    };
 
-  try {
-      await dynamo.delete(params).promise();
-      return { statusCode: 200, body: JSON.stringify({ message: 'Message deleted successfully' }) };
+    await dynamo.delete(params).promise(); // Raderar meddelandet i DynamoDB
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ message: 'Message deleted successfully' }),
+      headers: {
+        'Access-Control-Allow-Origin': '*', // CORS header
+        'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE, OPTIONS', // Tillåtna metoder
+      }
+    };
   } catch (error) {
-      return { statusCode: 500, body: JSON.stringify({ error: 'Could not delete message' }) };
+    console.error(error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Could not delete message' }),
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE, OPTIONS',
+      }
+    };
   }
 };

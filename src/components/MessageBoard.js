@@ -9,7 +9,7 @@ const MessageBoard = () => {
 
   useEffect(() => {
     // Fetch messages from the API
-    axios.get('https://your-api-url/messages')
+    axios.get('https://vl6ibqcmg8.execute-api.eu-central-1.amazonaws.com/dev/messages')
       .then(response => {
         setMessages(response.data);
         setLoading(false);
@@ -21,7 +21,7 @@ const MessageBoard = () => {
   }, []);
 
   const addMessage = (message) => {
-    axios.post('https://your-api-url/messages', message)
+    axios.post('https://vl6ibqcmg8.execute-api.eu-central-1.amazonaws.com/dev/messages', message)
       .then(response => {
         setMessages([...messages, response.data]);
       })
@@ -31,7 +31,7 @@ const MessageBoard = () => {
   };
 
   const updateMessage = (id, updatedMessage) => {
-    axios.put(`https://your-api-url/messages/${id}`, updatedMessage)
+    axios.put(`https://vl6ibqcmg8.execute-api.eu-central-1.amazonaws.com/dev/messages/{id}`, updatedMessage)
       .then(response => {
         setMessages(messages.map(msg => msg.id === id ? response.data : msg));
       })
@@ -41,7 +41,7 @@ const MessageBoard = () => {
   };
 
   const deleteMessage = (id) => {
-    axios.delete(`https://your-api-url/messages/${id}`)
+    axios.delete(`https://vl6ibqcmg8.execute-api.eu-central-1.amazonaws.com/dev/messages/{id}`)
       .then(() => {
         setMessages(messages.filter(msg => msg.id !== id));
       })

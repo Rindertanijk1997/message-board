@@ -26,109 +26,19 @@
         "LogGroupName": "/aws/lambda/message-board-dev-getAllMessages"
       }
     },
-    "IamRoleLambdaExecution": {
-      "Type": "AWS::IAM::Role",
-      "Properties": {
-        "AssumeRolePolicyDocument": {
-          "Version": "2012-10-17",
-          "Statement": [
-            {
-              "Effect": "Allow",
-              "Principal": {
-                "Service": [
-                  "lambda.amazonaws.com"
-                ]
-              },
-              "Action": [
-                "sts:AssumeRole"
-              ]
-            }
-          ]
-        },
-        "Policies": [
-          {
-            "PolicyName": {
-              "Fn::Join": [
-                "-",
-                [
-                  "message-board",
-                  "dev",
-                  "lambda"
-                ]
-              ]
-            },
-            "PolicyDocument": {
-              "Version": "2012-10-17",
-              "Statement": [
-                {
-                  "Effect": "Allow",
-                  "Action": [
-                    "logs:CreateLogStream",
-                    "logs:CreateLogGroup",
-                    "logs:TagResource"
-                  ],
-                  "Resource": [
-                    {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/message-board-dev*:*"
-                    }
-                  ]
-                },
-                {
-                  "Effect": "Allow",
-                  "Action": [
-                    "logs:PutLogEvents"
-                  ],
-                  "Resource": [
-                    {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/message-board-dev*:*:*"
-                    }
-                  ]
-                },
-                {
-                  "Effect": "Allow",
-                  "Action": [
-                    "dynamodb:*"
-                  ],
-                  "Resource": "arn:aws:dynamodb:eu-central-1:123456789012:table/MessagesTable"
-                }
-              ]
-            }
-          }
-        ],
-        "Path": "/",
-        "RoleName": {
-          "Fn::Join": [
-            "-",
-            [
-              "message-board",
-              "dev",
-              {
-                "Ref": "AWS::Region"
-              },
-              "lambdaRole"
-            ]
-          ]
-        }
-      }
-    },
     "CreateMessageLambdaFunction": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-eu-central-1-f312739a-b680",
-          "S3Key": "serverless/message-board/dev/1726755152465-2024-09-19T14:12:32.465Z/message-board.zip"
+          "S3Key": "serverless/message-board/dev/1726822465959-2024-09-20T08:54:25.959Z/message-board.zip"
         },
         "Handler": "handler.createMessage",
         "Runtime": "nodejs16.x",
         "FunctionName": "message-board-dev-createMessage",
         "MemorySize": 1024,
         "Timeout": 6,
-        "Role": {
-          "Fn::GetAtt": [
-            "IamRoleLambdaExecution",
-            "Arn"
-          ]
-        }
+        "Role": "arn:aws:iam::050451366469:role/lambda-full-access-dynamodb"
       },
       "DependsOn": [
         "CreateMessageLogGroup"
@@ -139,19 +49,14 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-eu-central-1-f312739a-b680",
-          "S3Key": "serverless/message-board/dev/1726755152465-2024-09-19T14:12:32.465Z/message-board.zip"
+          "S3Key": "serverless/message-board/dev/1726822465959-2024-09-20T08:54:25.959Z/message-board.zip"
         },
         "Handler": "handler.updateMessage",
         "Runtime": "nodejs16.x",
         "FunctionName": "message-board-dev-updateMessage",
         "MemorySize": 1024,
         "Timeout": 6,
-        "Role": {
-          "Fn::GetAtt": [
-            "IamRoleLambdaExecution",
-            "Arn"
-          ]
-        }
+        "Role": "arn:aws:iam::050451366469:role/lambda-full-access-dynamodb"
       },
       "DependsOn": [
         "UpdateMessageLogGroup"
@@ -162,19 +67,14 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-eu-central-1-f312739a-b680",
-          "S3Key": "serverless/message-board/dev/1726755152465-2024-09-19T14:12:32.465Z/message-board.zip"
+          "S3Key": "serverless/message-board/dev/1726822465959-2024-09-20T08:54:25.959Z/message-board.zip"
         },
         "Handler": "handler.deleteMessage",
         "Runtime": "nodejs16.x",
         "FunctionName": "message-board-dev-deleteMessage",
         "MemorySize": 1024,
         "Timeout": 6,
-        "Role": {
-          "Fn::GetAtt": [
-            "IamRoleLambdaExecution",
-            "Arn"
-          ]
-        }
+        "Role": "arn:aws:iam::050451366469:role/lambda-full-access-dynamodb"
       },
       "DependsOn": [
         "DeleteMessageLogGroup"
@@ -185,62 +85,57 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-eu-central-1-f312739a-b680",
-          "S3Key": "serverless/message-board/dev/1726755152465-2024-09-19T14:12:32.465Z/message-board.zip"
+          "S3Key": "serverless/message-board/dev/1726822465959-2024-09-20T08:54:25.959Z/message-board.zip"
         },
         "Handler": "handler.getAllMessages",
         "Runtime": "nodejs16.x",
         "FunctionName": "message-board-dev-getAllMessages",
         "MemorySize": 1024,
         "Timeout": 6,
-        "Role": {
-          "Fn::GetAtt": [
-            "IamRoleLambdaExecution",
-            "Arn"
-          ]
-        }
+        "Role": "arn:aws:iam::050451366469:role/lambda-full-access-dynamodb"
       },
       "DependsOn": [
         "GetAllMessagesLogGroup"
       ]
     },
-    "CreateMessageLambdaVersionLOJNB7et86pvITdrnCDss3nh8ckORlQKSKvbjyrQ": {
+    "CreateMessageLambdaVersion5y01e8l8cYCly6PXyTsaGzj6UZW5l1DYojXTvIkNtF4": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateMessageLambdaFunction"
         },
-        "CodeSha256": "LlngF5m2eTvH9/cQP7MQYNyOU/ddDz0L7ZmAADu2Jpo="
+        "CodeSha256": "WH0aPaNiiRvz1IEPFx23/XeBzt9uqE2H3YiMeMC+Z7c="
       }
     },
-    "UpdateMessageLambdaVersiongouAJ56XDyh6a9mH13qmTk5SE4bjNAbCCfQ2ImuHZyM": {
+    "UpdateMessageLambdaVersionzqDWaq1W1RljYiecZeGzmMWZzrXcXVCKcPl3sVIM8": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateMessageLambdaFunction"
         },
-        "CodeSha256": "LlngF5m2eTvH9/cQP7MQYNyOU/ddDz0L7ZmAADu2Jpo="
+        "CodeSha256": "WH0aPaNiiRvz1IEPFx23/XeBzt9uqE2H3YiMeMC+Z7c="
       }
     },
-    "DeleteMessageLambdaVersion3zw0C7MoC9gGy8C5kewXQwRnHozJs77bhs4PXMBa5w": {
+    "DeleteMessageLambdaVersionuq9Vc7HrIUzztINcwBrNqOoI41qJc4uFWiFrWxEI": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "DeleteMessageLambdaFunction"
         },
-        "CodeSha256": "LlngF5m2eTvH9/cQP7MQYNyOU/ddDz0L7ZmAADu2Jpo="
+        "CodeSha256": "WH0aPaNiiRvz1IEPFx23/XeBzt9uqE2H3YiMeMC+Z7c="
       }
     },
-    "GetAllMessagesLambdaVersionQ7SN0EEWSpkaudak8IwbGZxTzb3qZooiIWuMLq0Fs": {
+    "GetAllMessagesLambdaVersionBLG2dMSs1voNXrXvBVK2HxaVVgl2cyL9oFa0M2mM": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetAllMessagesLambdaFunction"
         },
-        "CodeSha256": "LlngF5m2eTvH9/cQP7MQYNyOU/ddDz0L7ZmAADu2Jpo="
+        "CodeSha256": "WH0aPaNiiRvz1IEPFx23/XeBzt9uqE2H3YiMeMC+Z7c="
       }
     },
     "ApiGatewayRestApi": {
@@ -556,7 +451,7 @@
         "GetAllMessagesLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1726755150104": {
+    "ApiGatewayDeployment1726822461518": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -754,7 +649,7 @@
     "CreateMessageLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateMessageLambdaVersionLOJNB7et86pvITdrnCDss3nh8ckORlQKSKvbjyrQ"
+        "Ref": "CreateMessageLambdaVersion5y01e8l8cYCly6PXyTsaGzj6UZW5l1DYojXTvIkNtF4"
       },
       "Export": {
         "Name": "sls-message-board-dev-CreateMessageLambdaFunctionQualifiedArn"
@@ -763,7 +658,7 @@
     "UpdateMessageLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateMessageLambdaVersiongouAJ56XDyh6a9mH13qmTk5SE4bjNAbCCfQ2ImuHZyM"
+        "Ref": "UpdateMessageLambdaVersionzqDWaq1W1RljYiecZeGzmMWZzrXcXVCKcPl3sVIM8"
       },
       "Export": {
         "Name": "sls-message-board-dev-UpdateMessageLambdaFunctionQualifiedArn"
@@ -772,7 +667,7 @@
     "DeleteMessageLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "DeleteMessageLambdaVersion3zw0C7MoC9gGy8C5kewXQwRnHozJs77bhs4PXMBa5w"
+        "Ref": "DeleteMessageLambdaVersionuq9Vc7HrIUzztINcwBrNqOoI41qJc4uFWiFrWxEI"
       },
       "Export": {
         "Name": "sls-message-board-dev-DeleteMessageLambdaFunctionQualifiedArn"
@@ -781,7 +676,7 @@
     "GetAllMessagesLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetAllMessagesLambdaVersionQ7SN0EEWSpkaudak8IwbGZxTzb3qZooiIWuMLq0Fs"
+        "Ref": "GetAllMessagesLambdaVersionBLG2dMSs1voNXrXvBVK2HxaVVgl2cyL9oFa0M2mM"
       },
       "Export": {
         "Name": "sls-message-board-dev-GetAllMessagesLambdaFunctionQualifiedArn"
