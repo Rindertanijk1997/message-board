@@ -4,13 +4,9 @@ function Message({ id, username, text, createdAt, onUpdate, onDelete }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedText, setEditedText] = useState(text);
 
-  const handleEdit = () => {
-    setIsEditing(true);
-  };
-
-  const handleCancel = () => {
-    setIsEditing(false);
-    setEditedText(text);
+  const handleEditToggle = () => {
+    setIsEditing(!isEditing);
+    if (isEditing) setEditedText(text);
   };
 
   const handleSubmit = (e) => {
@@ -24,18 +20,15 @@ function Message({ id, username, text, createdAt, onUpdate, onDelete }) {
       <h4>{username}</h4>
       {isEditing ? (
         <form onSubmit={handleSubmit}>
-          <textarea
-            value={editedText}
-            onChange={(e) => setEditedText(e.target.value)}
-          />
+          <textarea value={editedText} onChange={e => setEditedText(e.target.value)} />
           <button type="submit">Spara</button>
-          <button type="button" onClick={handleCancel}>Avbryt</button>
+          <button type="button" onClick={handleEditToggle}>Avbryt</button>
         </form>
       ) : (
         <>
           <p>{text}</p>
           <small>{createdAt}</small>
-          <button onClick={handleEdit}>Redigera</button>
+          <button onClick={handleEditToggle}>Redigera</button>
           <button onClick={() => onDelete(id)}>Ta bort</button>
         </>
       )}
