@@ -1,50 +1,68 @@
-/* Basstilar för att säkerställa enhetlighet */
-body, html {
+ /* Basstilar */
+ body, html {
     margin: 0;
     padding: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
+    font-family: 'Poppins', sans-serif;
+    background-color: #0E1A2B;
+    color: #F5F5F5;
     overflow-x: hidden;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap'); /* Importerar modernt typsnitt */
+
+/* App Container */
 .App {
-    margin: 0 auto;
-    max-width: 500px;
-    background-color: #ffffff;
-    padding: 15px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-}
-
-.App-header {
-    background-color: #6200ea;
-    color: white;
+    margin: 20px auto;
+    max-width: 400px;
+    background-color: #1A2D3B;
     padding: 20px;
-    text-align: center;
-    border-radius: 10px 10px 0 0;
-    font-size: 1.2em;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    border-radius: 14px;
+    color: #F5F5F5;
 }
 
+/* Header */
+.App-header {
+    background-color: #101820;
+    color: #F5F5F5;
+    padding: 12px; /* Mindre padding */
+    text-align: center;
+    border-radius: 14px 14px 0 0;
+    font-size: 1.2em; /* Mindre textstorlek */
+    letter-spacing: 1.2px; /* Minska bokstavsavstånd */
+    font-weight: 500; /* Lite tunnare font-weight */
+}
+
+/* Meddelande */
 .message {
-    background-color: white;
-    margin-bottom: 15px;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: #FAF3E0;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #D4AF37;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: #101820;
+}
+
+.message:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 .message h4 {
     margin-top: 0;
-    font-size: 1.1em;
-    color: #6200ea;
+    font-size: 1.1em; /* Mindre rubrikstorlek */
+    font-weight: 600;
+    color: #101820;
 }
 
 .message p {
-    font-size: 0.95em;
-    color: #555;
+    font-size: 1em; /* Mindre brödtext */
+    color: #333333;
 }
 
+/* Formulär */
 form {
     margin-top: 20px;
 }
@@ -53,42 +71,53 @@ input[type="text"], textarea {
     width: 100%;
     padding: 12px;
     margin: 8px 0;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 1em;
+    border: 1px solid #E5E5E5;
+    border-radius: 12px;
+    background-color: #FAFAFA;
+    color: #333333;
+    font-family: 'Poppins', sans-serif;
     box-sizing: border-box;
+    transition: box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus, textarea:focus {
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    outline: none;
 }
 
 textarea {
-    height: 80px;
+    height: 100px;
     resize: none;
 }
 
+/* Knappar */
 button {
     width: 100%;
-    background-color: #6200ea;
-    color: white;
+    background-color: #D4AF37;
+    color: #ffffff;
     border: none;
     padding: 12px;
-    border-radius: 8px;
-    font-size: 1em;
+    border-radius: 14px;
+    font-size: 1.1em;
+    font-family: 'Poppins', sans-serif;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-bottom: 10px; /* Lägg till mellanrum under varje knapp */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 16px;
 }
 
 button:hover {
-    background-color: #3700B3;
+    background-color: #C89B30;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
 }
 
 /* Responsiv design */
-@media (max-width: 500px) {
+@media (max-width: 400px) {
     .App {
-        padding: 10px;
+        padding: 12px;
     }
 
     .App-header {
-        font-size: 1.1em;
+        font-size: 1.1em; /* Mindre fontstorlek för mobil */
     }
 
     button {
@@ -97,5 +126,9 @@ button:hover {
 
     input[type="text"], textarea {
         padding: 10px;
+    }
+
+    .modal-content {
+        max-width: 90%; /* På små skärmar gör modalen smalare */
     }
 }
