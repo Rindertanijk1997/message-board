@@ -108,7 +108,8 @@ button {
     font-family: 'Poppins', sans-serif;
     cursor: pointer;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
+    margin-top: 16px;
 }
 
 button:hover {
