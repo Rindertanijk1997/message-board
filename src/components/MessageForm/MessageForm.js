@@ -14,7 +14,7 @@ function MessageForm({ onMessageSubmit, onClose }) {
 
   return (
     <div className="message-form">
-      <button className="close-button" onClick={onClose}>X</button> {/* Stängningsknapp */}
+      <button className="close-button" onClick={onClose}>X</button> 
       <form onSubmit={handleSubmit}>
         <input
           type="text"
