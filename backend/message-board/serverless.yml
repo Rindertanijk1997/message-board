@@ -22,27 +22,94 @@ functions:
       - http:
           path: messages
           method: post
+          cors:
+            origins:
+              - '*'  # Allow all origins
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+            allowMethods:
+              - OPTIONS
+              - POST
+            allowCredentials: false
+      - http:
+          path: messages
+          method: options  # Enable OPTIONS for CORS preflight
           cors: true
+
   getAllMessages:
     handler: handler.getAllMessages
     events:
       - http:
           path: messages
           method: get
+          cors:
+            origins:
+              - '*'  # Allow all origins
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+            allowMethods:
+              - OPTIONS
+              - GET
+            allowCredentials: false
+      - http:
+          path: messages
+          method: options  # Enable OPTIONS for CORS preflight
           cors: true
+
   updateMessage:
     handler: handler.updateMessage
     events:
       - http:
           path: messages/{id}
           method: put
+          cors:
+            origins:
+              - '*'  # Allow all origins
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+            allowMethods:
+              - OPTIONS
+              - PUT
+            allowCredentials: false
+      - http:
+          path: messages/{id}
+          method: options  # Enable OPTIONS for CORS preflight
           cors: true
+
   deleteMessage:
     handler: handler.deleteMessage
     events:
       - http:
           path: messages/{id}
           method: delete
+          cors:
+            origins:
+              - '*'  # Allow all origins
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+            allowMethods:
+              - OPTIONS
+              - DELETE
+            allowCredentials: false
+      - http:
+          path: messages/{id}
+          method: options  # Enable OPTIONS for CORS preflight
           cors: true
 
 resources:
