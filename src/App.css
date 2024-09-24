@@ -1,5 +1,5 @@
- /* Basstilar */
- body, html {
+/* Grundläggande stilar */
+body, html {
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
@@ -18,7 +18,6 @@
     padding: 20px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
     border-radius: 14px;
-    color: #F5F5F5;
 }
 
 /* Header */
@@ -31,6 +30,11 @@
     font-size: 1.2em; /* Mindre textstorlek */
     letter-spacing: 1.2px; /* Minska bokstavsavstånd */
     font-weight: 500; /* Lite tunnare font-weight */
+}
+
+h1 {
+    font-size: 24px; /* Justera storleken till 24px (eller valfri storlek) */
+    text-align: center; /* Centrera rubriken */
 }
 
 /* Meddelande */
@@ -64,7 +68,16 @@
 
 /* Formulär */
 form {
-    margin-top: 20px;
+    margin: 20px 0;
+}
+
+h2 {
+    margin-bottom: 10px;
+}
+
+label {
+    display: block;
+    margin: 10px 0;
 }
 
 input[type="text"], textarea {
@@ -75,7 +88,6 @@ input[type="text"], textarea {
     border-radius: 12px;
     background-color: #FAFAFA;
     color: #333333;
-    font-family: 'Poppins', sans-serif;
     box-sizing: border-box;
     transition: box-shadow 0.3s ease;
 }
@@ -108,6 +120,49 @@ button {
 button:hover {
     background-color: #C89B30;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+/* Ingen meddelanden */
+.no-messages {
+    text-align: center;
+    font-style: italic;
+    color: #555;
+    margin: 20px; /* Valfritt för lite mellanrum */
+}
+
+/* Ta bort overlay-stilar och uppdatera formulärstilar */
+.message-form {
+    background: white;
+    padding: 20px; /* Ge lite padding */
+    border-radius: 8px; /* Rundade hörn */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Mjukare skugga */
+    position: absolute; /* Positionera relativt för att centrera */
+    left: 50%; /* Centrera horisontellt */
+    top: 50%; /* Centrera vertikalt */
+    transform: translate(-50%, -50%); /* Justera för att centrera exakt */
+    z-index: 1000; /* Se till att den ligger ovanpå */
+}
+
+/* Knappen för att stänga formuläret */
+.close-button {
+    position: absolute; /* Fortfarande absolut positionering */
+    top: 10px; /* Avstånd från toppen */
+    right: 10px; /* Avstånd från höger */
+    width: 30px; /* Sätt en fast bredd */
+    height: 30px; /* Sätt en fast höjd */
+    border: none; /* Ingen kant */
+    background-color: #dc3545; /* Röd färg för stängning */
+    color: white; /* Vit textfärg */
+    cursor: pointer; /* Muspekare som pekar */
+    border-radius: 0; /* Ingen rundning, gör den fyrkantig */
+    font-size: 18px; /* Justera textstorleken */
+    display: flex; /* Flexbox för centrerad text */
+    align-items: center; /* Vertikal centrering */
+    justify-content: center; /* Horisontell centrering */
+}
+
+.close-button:hover {
+    background-color: #c82333; /* Mörkare röd vid hover */
 }
 
 /* Responsiv design */
