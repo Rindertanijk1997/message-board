@@ -29,6 +29,32 @@ function MessageBoard() {
     }
   };
 
+  // Uppdatera ett meddelande
+  const handleUpdateMessage = (id, newText) => {
+    fetch(`https://vl6ibqcmg8.execute-api.eu-central-1.amazonaws.com/dev/messages/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: newText })
+    })
+    .then(() => {
+      setMessages(prevMessages => prevMessages.map(msg => 
+        msg.id === id ? { ...msg, text: newText } : msg
+      ));
+    })
+    .catch(error => console.error('Error updating message:', error));
+  };
+
+  // Ta bort ett meddelande
+  const handleDeleteMessage = (id) => {
+    fetch(`https://vl6ibqcmg8.execute-api.eu-central-1.amazonaws.com/dev/messages/${id}`, { method: 'DELETE' })
+    .then(response => {
+      if (response.ok) {
+        setMessages(prevMessages => prevMessages.filter(msg => msg.id !== id));
+      }
+    })
+    .catch(error => console.error('Error deleting message:', error));
+  };
+
   // Stäng formuläret
   const handleCloseForm = () => {
     setFormVisible(false); // Sätter formuläret till osynligt
@@ -54,8 +80,8 @@ function MessageBoard() {
             username={message.username}
             text={message.text}
             createdAt={message.createdAt}
-            onUpdate={() => {}}
-            onDelete={() => {}}
+            onUpdate={(newText) => handleUpdateMessage(message.id, newText)} // Anropa uppdateringsfunktion
+            onDelete={() => handleDeleteMessage(message.id)} // Anropa borttagningsfunktion
           />
         ))
       )}
