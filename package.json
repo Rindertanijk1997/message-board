@@ -2,6 +2,7 @@
   "name": "message-board",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://rindert-shui.s3-website.eu-central-1.amazonaws.com/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",

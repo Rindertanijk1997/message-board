@@ -4,8 +4,9 @@ import MessageForm from '../MessageForm/MessageForm';
 
 function MessageBoard() {
   const [messages, setMessages] = useState([]);
-  const [isFormVisible, setIsFormVisible] = useState(false); // Ny state-variabel
+  const [isFormVisible, setFormVisible] = useState(false); // Hantera synlighet av formuläret
 
+  // Hämta alla meddelanden vid sidladdning
   useEffect(() => {
     fetch('https://vl6ibqcmg8.execute-api.eu-central-1.amazonaws.com/dev/messages')
       .then(response => response.json())
@@ -13,6 +14,7 @@ function MessageBoard() {
       .catch(error => console.error('Error fetching messages:', error));
   }, []);
 
+  // Lägg till ett nytt meddelande och uppdatera listan
   const handleAddMessage = async (newMessage) => {
     const response = await fetch('https://vl6ibqcmg8.execute-api.eu-central-1.amazonaws.com/dev/messages', {
       method: 'POST',
@@ -22,46 +24,28 @@ function MessageBoard() {
     if (response.ok) {
       const addedMessage = await response.json();
       setMessages(prevMessages => [...prevMessages, { ...newMessage, id: addedMessage.id }]);
-      setIsFormVisible(false); // Stäng formuläret efter att meddelandet har skickats
     } else {
       console.error('Failed to add message');
     }
   };
 
-  const handleUpdateMessage = (id, newText) => {
-    fetch(`https://vl6ibqcmg8.execute-api.eu-central-1.amazonaws.com/dev/messages/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text: newText })
-    })
-    .then(() => {
-      setMessages(prevMessages => prevMessages.map(msg => 
-        msg.id === id ? { ...msg, text: newText } : msg
-      ));
-    });
-  };
-
-  const handleDeleteMessage = (id) => {
-    fetch(`https://vl6ibqcmg8.execute-api.eu-central-1.amazonaws.com/dev/messages/${id}`, { method: 'DELETE' })
-    .then(response => {
-      if (response.ok) {
-        setMessages(prevMessages => prevMessages.filter(msg => msg.id !== id));
-      }
-    });
+  // Stäng formuläret
+  const handleCloseForm = () => {
+    setFormVisible(false); // Sätter formuläret till osynligt
   };
 
   return (
     <div>
       {/* Knapp för att visa formuläret */}
-      <button onClick={() => setIsFormVisible(true)}>Skriv nytt meddelande</button>
+      <button onClick={() => setFormVisible(true)}>Skriv nytt meddelande</button>
 
-      {/* Visa formuläret endast om isFormVisible är true */}
+      {/* Visa formuläret om det är synligt */}
       {isFormVisible && (
-        <MessageForm onMessageSubmit={handleAddMessage} />
+        <MessageForm onMessageSubmit={handleAddMessage} onClose={handleCloseForm} />
       )}
 
       {messages.length === 0 ? (
-        <p>Du har inga meddelanden att visa.</p>
+        <p>Du har inga meddelanden att visa</p>
       ) : (
         messages.map(message => (
           <Message
@@ -70,8 +54,8 @@ function MessageBoard() {
             username={message.username}
             text={message.text}
             createdAt={message.createdAt}
-            onUpdate={handleUpdateMessage}
-            onDelete={handleDeleteMessage}
+            onUpdate={() => {}}
+            onDelete={() => {}}
           />
         ))
       )}
@@ -80,4 +64,3 @@ function MessageBoard() {
 }
 
 export default MessageBoard;
-

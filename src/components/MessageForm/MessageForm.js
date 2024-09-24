@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 
-function MessageForm({ onMessageSubmit, onClose }) { // Lägg till onClose som prop
+function MessageForm({ onMessageSubmit, onClose }) {
   const [username, setUsername] = useState('');
   const [text, setText] = useState('');
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     onMessageSubmit({ username, text });
     setUsername('');
     setText('');
+    onClose(); // Stänger formuläret efter att meddelandet skickats
   };
 
   return (
@@ -18,13 +19,13 @@ function MessageForm({ onMessageSubmit, onClose }) { // Lägg till onClose som p
         <input
           type="text"
           value={username}
-          onChange={e => setUsername(e.target.value)}
+          onChange={(e) => setUsername(e.target.value)}
           placeholder="Användarnamn"
           required
         />
         <textarea
           value={text}
-          onChange={e => setText(e.target.value)}
+          onChange={(e) => setText(e.target.value)}
           placeholder="Skriv ditt meddelande här..."
           required
         />

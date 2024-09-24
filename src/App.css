@@ -130,18 +130,20 @@ button:hover {
     margin: 20px; /* Valfritt för lite mellanrum */
 }
 
-/* Ta bort overlay-stilar och uppdatera formulärstilar */
 .message-form {
-    background: white;
-    padding: 20px; /* Ge lite padding */
-    border-radius: 8px; /* Rundade hörn */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Mjukare skugga */
-    position: absolute; /* Positionera relativt för att centrera */
-    left: 50%; /* Centrera horisontellt */
-    top: 50%; /* Centrera vertikalt */
-    transform: translate(-50%, -50%); /* Justera för att centrera exakt */
-    z-index: 1000; /* Se till att den ligger ovanpå */
-}
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    max-width: 400px; /* Justera maxbredd */
+    width: 70%; /* Justera bredd för mobil */
+  }
+  
 
 /* Knappen för att stänga formuläret */
 .close-button {
