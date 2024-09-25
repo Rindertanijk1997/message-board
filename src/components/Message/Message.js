@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 
+function formatDate(isoString) {
+  const date = new Date(isoString);
+  return `${date.getDate()}/${date.getMonth() + 1} kl ${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
+}
+
 function Message({ id, username, text, createdAt, onUpdate, onDelete }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedText, setEditedText] = useState(text);
@@ -15,6 +20,8 @@ function Message({ id, username, text, createdAt, onUpdate, onDelete }) {
     setIsEditing(false);
   };
 
+  const formattedDate = formatDate(createdAt); 
+
   return (
     <div className="message">
       <h4>{username}</h4>
@@ -29,7 +36,7 @@ function Message({ id, username, text, createdAt, onUpdate, onDelete }) {
           <p>{text}</p>
           <div className="message-info">
             <span className="message-id">ID: {id}</span>
-            <small>{createdAt}</small>
+            <small> Created: {formattedDate}</small> 
           </div>
           <button onClick={handleEditToggle}>Redigera</button>
           <button onClick={() => onDelete(id)}>Ta bort</button>

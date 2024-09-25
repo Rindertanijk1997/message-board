@@ -60,12 +60,12 @@ function MessageBoard() {
     <div>
       {/* Knapp för att visa formuläret */}
       <button onClick={() => setIsFormVisible(true)}>Skriv nytt meddelande</button>
-
+  
       {/* Visa formuläret endast om isFormVisible är true */}
       {isFormVisible && (
-        <MessageForm onMessageSubmit={handleAddMessage} />
+        <MessageForm onMessageSubmit={handleAddMessage} onClose={() => setIsFormVisible(false)} />
       )}
-
+  
       {messages.length === 0 ? (
         <p>Du har inga meddelanden att visa.</p>
       ) : (
@@ -79,10 +79,11 @@ function MessageBoard() {
             onUpdate={handleUpdateMessage}
             onDelete={handleDeleteMessage}
           />
-        ))
+        )) // Här saknades en avslutande parentes
       )}
     </div>
   );
+
 }
 
 export default MessageBoard;
