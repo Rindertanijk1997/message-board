@@ -27,7 +27,10 @@ function Message({ id, username, text, createdAt, onUpdate, onDelete }) {
       ) : (
         <>
           <p>{text}</p>
-          <small>{createdAt}</small>
+          <div className="message-info">
+            <span className="message-id">ID: {id}</span>
+            <small>{createdAt}</small>
+          </div>
           <button onClick={handleEditToggle}>Redigera</button>
           <button onClick={() => onDelete(id)}>Ta bort</button>
         </>

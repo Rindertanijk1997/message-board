@@ -21,7 +21,13 @@ function MessageBoard() {
     });
     if (response.ok) {
       const addedMessage = await response.json();
-      setMessages(prevMessages => [...prevMessages, { ...newMessage, id: addedMessage.id }]);
+      console.log(addedMessage); // För att se vad som kommer tillbaka från servern
+      const createdAt = new Date().toISOString(); // Skapa ett datum när meddelandet skapas
+      setMessages(prevMessages => [...prevMessages, {
+        ...newMessage, 
+        id: addedMessage.id,
+        createdAt: createdAt // Använd det nyss skapade datumet
+      }]);
       setIsFormVisible(false); // Stäng formuläret efter att meddelandet har skickats
     } else {
       console.error('Failed to add message');
