@@ -12,7 +12,7 @@ module.exports.createMessage = async (event) => {
   try {
     const { username, text } = JSON.parse(event.body);
     const createdAt = new Date().toISOString();
-    const id = Math.random().toString(36).slice(2); // Generera ett enkelt unikt ID
+    const id = Math.random().toString(36).slice(2); 
 
     const params = {
       TableName: 'MessagesTable',
@@ -61,15 +61,15 @@ module.exports.getAllMessages = async () => {
 
 // Uppdatera ett meddelande
 module.exports.updateMessage = async (event) => {
-  const { id } = event.pathParameters; // Hämta ID från URL
-  const { text } = JSON.parse(event.body); // Anta att vi bara uppdaterar texten
+  const { id } = event.pathParameters; 
+  const { text } = JSON.parse(event.body); 
 
   const params = {
     TableName: 'MessagesTable',
     Key: { id },
     UpdateExpression: 'set #txt = :t',
     ExpressionAttributeNames: {
-      '#txt': 'text' // Använder ett alias för att undvika att använda reserverat ord direkt
+      '#txt': 'text' 
     },
     ExpressionAttributeValues: {
       ':t': text
@@ -96,7 +96,7 @@ module.exports.updateMessage = async (event) => {
 
 // Ta bort ett meddelande
 module.exports.deleteMessage = async (event) => {
-  const { id } = event.pathParameters; // Hämta ID från URL
+  const { id } = event.pathParameters; 
 
   const params = {
     TableName: 'MessagesTable',

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function MessageForm({ onMessageSubmit, onClose }) { // Lägg till onClose som prop
+function MessageForm({ onMessageSubmit, onClose }) { 
   const [username, setUsername] = useState('');
   const [text, setText] = useState('');
 
@@ -13,7 +13,7 @@ function MessageForm({ onMessageSubmit, onClose }) { // Lägg till onClose som p
 
   return (
     <div className="message-form">
-      <button className="close-button" onClick={onClose}>X</button> {/* Stängningsknapp */}
+      <button className="close-button" onClick={onClose}>X</button> 
       <form onSubmit={handleSubmit}>
         <input
           type="text"

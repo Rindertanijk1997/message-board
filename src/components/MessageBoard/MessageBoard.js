@@ -4,7 +4,7 @@ import MessageForm from '../MessageForm/MessageForm';
 
 function MessageBoard() {
   const [messages, setMessages] = useState([]);
-  const [isFormVisible, setIsFormVisible] = useState(false); // Ny state-variabel
+  const [isFormVisible, setIsFormVisible] = useState(false); 
 
   useEffect(() => {
     fetch('https://vl6ibqcmg8.execute-api.eu-central-1.amazonaws.com/dev/messages')
@@ -21,14 +21,14 @@ function MessageBoard() {
     });
     if (response.ok) {
       const addedMessage = await response.json();
-      console.log(addedMessage); // För att se vad som kommer tillbaka från servern
-      const createdAt = new Date().toISOString(); // Skapa ett datum när meddelandet skapas
+      console.log(addedMessage); 
+      const createdAt = new Date().toISOString(); 
       setMessages(prevMessages => [...prevMessages, {
         ...newMessage, 
         id: addedMessage.id,
-        createdAt: createdAt // Använd det nyss skapade datumet
+        createdAt: createdAt 
       }]);
-      setIsFormVisible(false); // Stäng formuläret efter att meddelandet har skickats
+      setIsFormVisible(false); 
     } else {
       console.error('Failed to add message');
     }
@@ -58,7 +58,6 @@ function MessageBoard() {
 
   return (
     <div>
-      {/* Knapp för att visa formuläret */}
       <button onClick={() => setIsFormVisible(true)}>Skriv nytt meddelande</button>
   
       {/* Visa formuläret endast om isFormVisible är true */}
@@ -79,7 +78,7 @@ function MessageBoard() {
             onUpdate={handleUpdateMessage}
             onDelete={handleDeleteMessage}
           />
-        )) // Här saknades en avslutande parentes
+        )) 
       )}
     </div>
   );
