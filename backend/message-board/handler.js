@@ -12,7 +12,7 @@ module.exports.createMessage = async (event) => {
   try {
     const { username, text } = JSON.parse(event.body);
     const createdAt = new Date().toISOString();
-    const id = Math.random().toString(36).slice(2); 
+    const id = Math.random().toString(36).slice(2); // Generera ett enkelt unikt ID
 
     const params = {
       TableName: 'MessagesTable',
@@ -62,7 +62,7 @@ module.exports.getAllMessages = async () => {
 // Uppdatera ett meddelande
 module.exports.updateMessage = async (event) => {
   const { id } = event.pathParameters; // Hämta ID från URL
-  const { text } = JSON.parse(event.body); 
+  const { text } = JSON.parse(event.body); // Anta att vi bara uppdaterar texten
 
   const params = {
     TableName: 'MessagesTable',
